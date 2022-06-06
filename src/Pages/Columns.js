@@ -1,3 +1,7 @@
+// import { format } from "date-fns";
+
+import { format } from "date-fns";
+
 export const Columns = [
   {
     Header: "id",
@@ -18,6 +22,9 @@ export const Columns = [
     Header: "Date of Birth",
     Footer: "Date of Birth",
     accessor: "date_of_birth",
+    cell: ({ value }) => {
+      return format(new Date(value), "PP");
+    },
   },
   {
     Header: "Country",

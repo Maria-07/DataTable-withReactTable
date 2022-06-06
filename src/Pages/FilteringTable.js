@@ -3,8 +3,10 @@ import { useTable, useSortBy } from "react-table";
 import MOCK_DATA from "./MOCK_DATA.json";
 import { Columns } from "./Columns";
 import "./table.css";
+import GlobalFilter from "./GlobalFilter";
+import { useGlobalFilter } from "react-table";
 
-export const ShortingTable = () => {
+const FilteringTable = () => {
   const columns = useMemo(() => Columns, []);
   const data = useMemo(() => MOCK_DATA, []);
 
@@ -14,17 +16,27 @@ export const ShortingTable = () => {
     headerGroups,
     footerGroups,
     rows,
+    state,
+    setGlobalFilter,
     prepareRow,
   } = useTable(
     {
       columns,
       data,
     },
+
+    useGlobalFilter,
     useSortBy
   );
 
+  const { globalFilter } = state;
+
   return (
     <>
+      <GlobalFilter
+        filter={globalFilter}
+        setFilter={setGlobalFilter}
+      ></GlobalFilter>
       <table {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
@@ -71,3 +83,5 @@ export const ShortingTable = () => {
     </>
   );
 };
+
+export default FilteringTable;
